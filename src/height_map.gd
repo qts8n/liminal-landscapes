@@ -2,9 +2,12 @@
 extends MeshInstance3D
 
 @export var UPDATE: bool = false
+
+@export_category("Terrain parameters")
 @export var PLANE_SIZE: Vector2i = Vector2i(100, 100)
 @export var REGION_GRADIENT: Gradient
 @export_range(0, 20) var HEIGHT_MULTIPLIER: int
+@export var HEIGHT_CURVE: Curve
 
 @export_category("Noise Parameters")
 @export var SEED: int = 0
@@ -61,7 +64,7 @@ func _update_a_mesh(noise_map: Image):
 					var region_color = REGION_GRADIENT.get_color(region_it)
 					color_map.set_pixel(x, y, region_color)
 					break
-			var height = noise_value * HEIGHT_MULTIPLIER
+			var height = HEIGHT_CURVE.sample(noise_value) * HEIGHT_MULTIPLIER
 			_verts.append(Vector3(top_left_x + x, height, top_left_z - y))
 			_uvs.append(Vector2(x / max_u, y / max_v))
 			_normals.append(Vector3.UP)
