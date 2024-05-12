@@ -3,6 +3,8 @@ extends MeshInstance3D
 
 @export var UPDATE: bool = false
 @export var PLANE_SIZE: Vector2i = Vector2i(100, 100)
+@export var REGION_GRADIENT: Gradient
+@export_range(0, 20) var HEIGHT_MULTIPLIER: int
 
 @export_category("Noise Parameters")
 @export var SEED: int = 0
@@ -45,13 +47,21 @@ func _update_a_mesh(noise_map: Image):
 	var max_u = float(PLANE_SIZE.x)
 	var max_v = float(PLANE_SIZE.y)
 
-	#var color_map = Image.new()
-	#color_map.copy_from(noise_map)
+	var region_num = REGION_GRADIENT.offsets.size()
+	var color_map = Image.new()
+	color_map.copy_from(noise_map)
 
 	var vertex_i = 0
 	for y in range(PLANE_SIZE.y):
 		for x in range(PLANE_SIZE.x):
-			var height = noise_map.get_pixel(x, y).r
+			var noise_value = noise_map.get_pixel(x, y).r
+			for region_it in range(region_num):
+				var region_height = REGION_GRADIENT.get_offset(region_it)
+				if noise_value <= region_height:
+					var region_color = REGION_GRADIENT.get_color(region_it)
+					color_map.set_pixel(x, y, region_color)
+					break
+			var height = noise_value * HEIGHT_MULTIPLIER
 			_verts.append(Vector3(top_left_x + x, height, top_left_z - y))
 			_uvs.append(Vector2(x / max_u, y / max_v))
 			_normals.append(Vector3.UP)
@@ -73,6 +83,11 @@ func _update_a_mesh(noise_map: Image):
 	# No blendshapes, lods, or compression used.
 	_a_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
 	_a_mesh.surface_set_name(0, "Terrain")
+
+	var material = StandardMaterial3D.new()
+	material.albedo_texture = ImageTexture.create_from_image(color_map)
+	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	_a_mesh.surface_set_material(0, material)
 
 
 func _generate_mesh():
