@@ -2,7 +2,7 @@ extends Node
 
 class_name MeshGenerator
 
-var _noise = NoiseGenerator.new()
+var _noise: NoiseGenerator
 
 # ArrayMesh instance
 var _a_mesh = ArrayMesh.new()
@@ -14,6 +14,18 @@ var _normals = PackedVector3Array()
 var _indices = PackedInt32Array()
 var _colors = PackedColorArray()
 var _color_map = Image.new()
+
+
+func _init(p_noise: UniformNoise = null) -> void:
+	if p_noise == null:
+		p_noise = UniformNoise.new()
+	_noise = NoiseGenerator.new(p_noise)
+
+
+func set_noise(p_noise: UniformNoise = null) -> void:
+	if p_noise == null:
+		p_noise = UniformNoise.new()
+	_noise.set_noise(p_noise)
 
 
 func clear() -> void:
@@ -39,12 +51,14 @@ func _add_triangle(st: SurfaceTool, a: int, b: int, c: int):
 
 
 func generate_chunk(
-	noise_map: Image,
-	regional_gradient: Gradient,
-	height_curve: Curve,
+	size: Vector2i,
+	regional_gradient: Gradient = null,
+	height_curve: Curve = null,
 	height_multiplier: float = 20.,
 ) -> ArrayMesh:
 	clear()
+
+	var noise_map = _noise.get_noise_map(size)
 
 	var map_width = noise_map.get_width()
 	var map_height = noise_map.get_height()
@@ -56,7 +70,10 @@ func generate_chunk(
 	var max_u = float(map_width)
 	var max_v = float(map_height)
 
-	var region_num = regional_gradient.offsets.size()
+	var region_num = 0
+	if regional_gradient != null:
+		region_num = regional_gradient.offsets.size()
+
 	_color_map.copy_from(noise_map)
 	_color_map.convert(Image.FORMAT_RGB8)
 
@@ -67,15 +84,16 @@ func generate_chunk(
 	for y in range(map_height):
 		for x in range(map_width):
 			var noise_value = noise_map.get_pixel(x, y).r
+			var region_color = _color_map.get_pixel(x, y)
 			for region_it in range(region_num):
 				var region_height = regional_gradient.get_offset(region_it)
 
 				if noise_value <= region_height:
-					var region_color = regional_gradient.get_color(region_it)
+					region_color = regional_gradient.get_color(region_it)
 					_color_map.set_pixel(x, y, region_color)
-					_colors.append(region_color)
-					st.set_color(region_color)
 					break
+			_colors.append(region_color)
+			st.set_color(region_color)
 
 			var uv = Vector2(x / max_u, y / max_v)
 			_uvs.append(uv)
@@ -85,7 +103,11 @@ func generate_chunk(
 			_normals.append(normal)
 			st.set_normal(normal)
 
-			var height = height_curve.sample(noise_value) * height_multiplier
+			var height_value = 1.
+			if height_curve != null:
+				height_value = height_curve.sample(noise_value)
+
+			var height = height_value * height_multiplier
 			var vertex = Vector3(top_left_x + x, height, top_left_z - y)
 			_verts.append(vertex)
 			st.add_vertex(vertex)

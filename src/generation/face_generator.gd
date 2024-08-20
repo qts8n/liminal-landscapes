@@ -10,16 +10,16 @@ var _indices = PackedInt32Array()
 var _shape_generator: ShapeGenerator
 
 
-func _init(p_shape_settings: Shape) -> void:
-	if p_shape_settings == null:
-		p_shape_settings = Shape.new()
-	_shape_generator = ShapeGenerator.new(p_shape_settings)
+func _init(p_shape: Shape = null) -> void:
+	if p_shape == null:
+		p_shape = Shape.new()
+	_shape_generator = ShapeGenerator.new(p_shape)
 
 
-func set_shape(p_shape_settings: Shape) -> void:
-	if p_shape_settings == null:
-		p_shape_settings = Shape.new()
-	_shape_generator.set_shape(p_shape_settings)
+func set_shape(p_shape: Shape = null) -> void:
+	if p_shape == null:
+		p_shape = Shape.new()
+	_shape_generator.set_shape(p_shape)
 
 
 func clear():
