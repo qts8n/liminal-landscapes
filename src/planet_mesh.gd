@@ -23,14 +23,33 @@ const SECTOR_NORMALS = [
 		if shape != null:
 			shape.changed.connect(_update_mesh)
 
-var _a_mesh = ArrayMesh.new()
+@export var noise: UniformNoise:
+	set(new_noise):
+		if noise != null and noise.changed.is_connected(_update_mesh):
+			noise.changed.disconnect(_update_mesh)
+		noise = new_noise
+		if noise != null:
+			noise.changed.connect(_update_mesh)
+
 
 var face_generator = FaceGenerator.new(shape)
 
+var _sector_threads = [
+	Thread.new(),
+	Thread.new(),
+	Thread.new(),
+	Thread.new(),
+	Thread.new(),
+	Thread.new(),
+]
+
+
+func _wait_for_threads() -> void:
+	for sector_thread: Thread in _sector_threads:
+		sector_thread.wait_to_finish()
+
 
 func clear() -> void:
-	_a_mesh.clear_surfaces()
-	_a_mesh.clear_surfaces()
 	face_generator.clear()
 
 
@@ -41,9 +60,12 @@ func _update_settings() -> void:
 func _update_mesh() -> void:
 	clear()
 	_update_settings()
-	for sector_normal in SECTOR_NORMALS:
-		face_generator.add_face(_a_mesh, sector_normal, resolution)
-	mesh = _a_mesh
+	for sector_it in range(SECTOR_NORMALS.size()):
+		var sector_normal = SECTOR_NORMALS[sector_it]
+		var sector_thread = _sector_threads[sector_it]
+		sector_thread.start(face_generator.add_face.bind(sector_normal, resolution))
+	_wait_for_threads()
+	mesh = face_generator.get_mesh()
 
 
 func _enter_tree() -> void:

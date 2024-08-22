@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UniformNoise" load_steps=2 format=3 uid="uid://cmp04jgmn4hai"]
+
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_5c7ar"]
+
+[resource]
+script = ExtResource("1_5c7ar")
+seed = 0
+frequency = 0.0101
+offset = Vector2i(0, 0)
+octaves = 3
+lacunarity = 1.864
+gain = 1.335
