@@ -8,11 +8,13 @@ var _shape_generator: ShapeGenerator
 var _a_mesh: ArrayMesh
 
 
-func _init(p_shape: Shape = null) -> void:
+func _init(p_shape: Shape = null, p_noise: UniformNoise = null) -> void:
 	_a_mesh = ArrayMesh.new()
 	if p_shape == null:
 		p_shape = Shape.new()
-	_shape_generator = ShapeGenerator.new(p_shape)
+	if p_noise == null:
+		p_noise = UniformNoise.new()
+	_shape_generator = ShapeGenerator.new(p_shape, p_noise)
 
 
 func _update_mesh(surface_array) -> void:
@@ -23,6 +25,12 @@ func set_shape(p_shape: Shape = null) -> void:
 	if p_shape == null:
 		p_shape = Shape.new()
 	_shape_generator.set_shape(p_shape)
+
+
+func set_noise(p_noise: UniformNoise = null) -> void:
+	if p_noise == null:
+		p_noise = UniformNoise.new()
+	_shape_generator.set_noise(p_noise)
 
 
 func clear():

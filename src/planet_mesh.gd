@@ -32,7 +32,7 @@ const SECTOR_NORMALS = [
 			noise.changed.connect(_update_mesh)
 
 
-var face_generator = FaceGenerator.new(shape)
+var face_generator = FaceGenerator.new(shape, noise)
 
 var _sector_threads = [
 	Thread.new(),
@@ -55,6 +55,7 @@ func clear() -> void:
 
 func _update_settings() -> void:
 	face_generator.set_shape(shape)
+	face_generator.set_noise(noise)
 
 
 func _update_mesh() -> void:
