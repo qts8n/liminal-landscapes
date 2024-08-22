@@ -4,9 +4,13 @@
 
 [resource]
 script = ExtResource("1_sik3t")
-roughness = 2.0
+strength = 0.39
+num_layers = 5
+base_roughness = 1.0
+roughness = 1.755
+persistence = 0.515
 center = Vector3(0, 0, 0)
-strength = 1.0
+min_value = 1.08
 seed = 0
 frequency = 0.5001
 offset = Vector2i(0, 0)

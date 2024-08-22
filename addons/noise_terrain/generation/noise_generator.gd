@@ -31,5 +31,14 @@ func get_noise_map(size: Vector2i) -> Image:
 
 
 func evaluate(point: Vector3) -> float:
-	var noise_value = (_ng.get_noise_3dv(point * _noise.roughness + _noise.center) + 1) * .5
+	var noise_value = 0.
+	var frequency = _noise.base_roughness
+	var amplitude = 1.
+	for it in range(_noise.num_layers):
+		var v = _ng.get_noise_3dv(point * frequency + _noise.center)
+		noise_value += (v + 1) * .5 * amplitude
+		frequency *= _noise.roughness
+		amplitude *= _noise.persistence
+	noise_value = maxf(0, noise_value - _noise.min_value)
+	#var noise_value = (_ng.get_noise_3dv(point * _noise.roughness + _noise.center) + 1) * .5
 	return noise_value * _noise.strength
