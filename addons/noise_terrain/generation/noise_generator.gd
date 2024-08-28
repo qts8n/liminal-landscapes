@@ -16,6 +16,8 @@ func _init(p_noise: UniformNoise) -> void:
 
 
 func set_noise(p_noise: UniformNoise) -> void:
+	if p_noise == null:
+		p_noise = UniformNoise.new()
 	_noise = p_noise
 
 	_ng.seed = _noise.seed
@@ -30,15 +32,5 @@ func get_noise_map(size: Vector2i) -> Image:
 	return _ng.get_seamless_image(size.x, size.y)
 
 
-func evaluate(point: Vector3) -> float:
-	var noise_value = 0.
-	var frequency = _noise.base_roughness
-	var amplitude = 1.
-	for it in range(_noise.num_layers):
-		var v = _ng.get_noise_3dv(point * frequency + _noise.center)
-		noise_value += (v + 1) * .5 * amplitude
-		frequency *= _noise.roughness
-		amplitude *= _noise.persistence
-	noise_value = maxf(0, noise_value - _noise.min_value)
-	#var noise_value = (_ng.get_noise_3dv(point * _noise.roughness + _noise.center) + 1) * .5
-	return noise_value * _noise.strength
+func is_enabled() -> bool:
+	return _noise.enabled

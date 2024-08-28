@@ -22,17 +22,10 @@ const SECTOR_NORMALS = [
 		shape = new_shape_settings
 		if shape != null:
 			shape.changed.connect(_update_mesh)
-
-@export var noise: UniformNoise:
-	set(new_noise):
-		if noise != null and noise.changed.is_connected(_update_mesh):
-			noise.changed.disconnect(_update_mesh)
-		noise = new_noise
-		if noise != null:
-			noise.changed.connect(_update_mesh)
+		_update_mesh()
 
 
-var face_generator = FaceGenerator.new(shape, noise)
+var face_generator = FaceGenerator.new(shape)
 
 var _sector_threads = [
 	Thread.new(),
@@ -55,7 +48,6 @@ func clear() -> void:
 
 func _update_settings() -> void:
 	face_generator.set_shape(shape)
-	face_generator.set_noise(noise)
 
 
 func _update_mesh() -> void:
