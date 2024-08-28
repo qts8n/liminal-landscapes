@@ -1,7 +1,13 @@
+@icon("../icon.png")
 @tool
 extends Resource
 
 class_name UniformNoise
+
+@export var enabled: bool = true:
+	set(new_enabled):
+		enabled = new_enabled
+		changed.emit()
 
 @export_group("Noise Parameters")
 
