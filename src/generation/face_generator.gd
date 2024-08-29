@@ -7,6 +7,8 @@ var _shape_generator: ShapeGenerator
 
 var _a_mesh: ArrayMesh
 
+signal changed
+
 
 func _init(p_shape: Shape = null) -> void:
 	_a_mesh = ArrayMesh.new()
@@ -17,6 +19,7 @@ func _init(p_shape: Shape = null) -> void:
 
 func _update_mesh(surface_array) -> void:
 	_a_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, surface_array)
+	changed.emit()
 
 
 func set_shape(p_shape: Shape = null) -> void:

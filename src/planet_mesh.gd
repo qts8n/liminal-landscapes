@@ -25,6 +25,12 @@ const SECTOR_NORMALS = [
 		_update_mesh()
 
 
+@export var planet_material: Material:
+	set(new_planet_material):
+		planet_material = new_planet_material
+		_update_mesh()
+
+
 var face_generator = FaceGenerator.new(shape)
 
 var _sector_threads = [
@@ -58,12 +64,23 @@ func _update_mesh() -> void:
 		var sector_thread = _sector_threads[sector_it]
 		sector_thread.start(face_generator.add_face.bind(sector_normal, resolution))
 	_wait_for_threads()
-	mesh = face_generator.get_mesh()
+
+
+func _process_mesh() -> void:
+	if mesh == null:
+		mesh = face_generator.get_mesh()
+	if planet_material != null:
+		for surface_idx in range(mesh.get_surface_count()):
+			if mesh.surface_get_material(surface_idx) == null:
+				mesh.surface_set_material(surface_idx, planet_material)
+
 
 
 func _enter_tree() -> void:
+	face_generator.changed.connect(_process_mesh)
 	_update_mesh()
 
 
 func _exit_tree() -> void:
+	face_generator.changed.disconnect(_process_mesh)
 	clear()
