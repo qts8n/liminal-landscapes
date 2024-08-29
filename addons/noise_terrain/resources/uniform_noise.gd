@@ -1,4 +1,3 @@
-@icon("../icon.png")
 @tool
 extends Resource
 
@@ -11,7 +10,7 @@ var _default_noise_settings = NoiseSettings.new()
 		enabled = new_enabled
 		_update_noise()
 
-@export var noise_settings: NoiseSettings:
+@export var noise_settings: NoiseSettings = null:
 	get:
 		if noise_settings == null:
 			return _default_noise_settings

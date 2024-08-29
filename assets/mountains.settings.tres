@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RidgedNoiseSettings" load_steps=2 format=3 uid="uid://c1os02r78ckgf"]
+
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/settings/ridged_noise_settings.gd" id="1_fc10e"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_fc10e")
+weight_scalar = 0.8
+strength = 2.0
+num_layers = 5
+base_roughness = 2.0
+roughness = 4.0
+persistence = 0.5
+center = Vector3(0, 0, 0)
+min_value = 1.0
