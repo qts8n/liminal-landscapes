@@ -11,6 +11,12 @@ class_name UniformNoise
 
 @export_group("Noise Parameters")
 
+enum FilterType {SIMPLE, RIDGID}
+
+@export var filter_type: FilterType = FilterType.SIMPLE:
+	set(new_filter_type):
+		filter_type = new_filter_type
+		changed.emit()
 @export var strength: float = 1.:
 	set(new_strength):
 		strength = new_strength
