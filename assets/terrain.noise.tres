@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_sik3t")
 enabled = true
+filter_type = 0
 strength = 1.0
 num_layers = 1
 base_roughness = 1.0

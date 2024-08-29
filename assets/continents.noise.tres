@@ -6,6 +6,7 @@
 resource_local_to_scene = true
 script = ExtResource("1_m8itm")
 enabled = true
+filter_type = 0
 strength = 0.2
 num_layers = 5
 base_roughness = 1.0

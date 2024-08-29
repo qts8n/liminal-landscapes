@@ -3,8 +3,10 @@
 [ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_48q8b"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_48q8b")
 enabled = true
+filter_type = 0
 strength = 10.0
 num_layers = 5
 base_roughness = 1.0
