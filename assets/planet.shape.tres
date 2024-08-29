@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="Shape" load_steps=5 format=3 uid="uid://c3q37qf2b0888"]
 
-[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_1x1me"]
-[ext_resource type="Resource" uid="uid://wwg2u6fl6gs6" path="res://assets/continents.noise.tres" id="2_u0ba6"]
-[ext_resource type="Resource" uid="uid://b4cjxyqlv3psf" path="res://assets/mountains.noise.tres" id="3_slb7e"]
-[ext_resource type="Script" path="res://src/resources/shape.gd" id="4_1xi81"]
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_0y1p6"]
+[ext_resource type="Resource" uid="uid://wwg2u6fl6gs6" path="res://assets/continents.noise.tres" id="2_f1v76"]
+[ext_resource type="Resource" uid="uid://b4cjxyqlv3psf" path="res://assets/mountains.noise.tres" id="3_1h0gq"]
+[ext_resource type="Script" path="res://src/resources/shape.gd" id="4_lfo5a"]
 
 [resource]
-script = ExtResource("4_1xi81")
+script = ExtResource("4_lfo5a")
 radius = 1.0
 first_layer_mask = true
-noise_layers = Array[ExtResource("1_1x1me")]([ExtResource("2_u0ba6"), ExtResource("3_slb7e")])
+noise_layers = Array[ExtResource("1_0y1p6")]([ExtResource("2_f1v76"), ExtResource("3_1h0gq")])

@@ -18,6 +18,7 @@ func _init(p_noise: UniformNoise) -> void:
 func set_noise(p_noise: UniformNoise) -> void:
 	if p_noise == null:
 		p_noise = UniformNoise.new()
+
 	_noise = p_noise
 
 	_ng.seed = _noise.seed

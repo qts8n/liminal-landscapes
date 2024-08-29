@@ -1,19 +1,13 @@
-[gd_resource type="Resource" script_class="UniformNoise" load_steps=2 format=3 uid="uid://b4cjxyqlv3psf"]
+[gd_resource type="Resource" script_class="UniformNoise" load_steps=3 format=3 uid="uid://b4cjxyqlv3psf"]
 
-[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_48q8b"]
+[ext_resource type="Resource" uid="uid://c1os02r78ckgf" path="res://assets/mountains.settings.tres" id="1_g2xtu"]
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="2_vh1y2"]
 
 [resource]
 resource_local_to_scene = true
-script = ExtResource("1_48q8b")
+script = ExtResource("2_vh1y2")
 enabled = true
-filter_type = 0
-strength = 10.0
-num_layers = 5
-base_roughness = 1.0
-roughness = 2.3
-persistence = 0.5
-center = Vector3(0, 0, 0)
-min_value = 1.1
+noise_settings = ExtResource("1_g2xtu")
 seed = 0
 frequency = 0.5001
 offset = Vector2i(0, 0)

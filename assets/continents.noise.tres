@@ -1,19 +1,13 @@
-[gd_resource type="Resource" script_class="UniformNoise" load_steps=2 format=3 uid="uid://wwg2u6fl6gs6"]
+[gd_resource type="Resource" script_class="UniformNoise" load_steps=3 format=3 uid="uid://wwg2u6fl6gs6"]
 
-[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_m8itm"]
+[ext_resource type="Resource" uid="uid://dobtv3m5mqhew" path="res://assets/continents.settings.tres" id="1_ovy12"]
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="2_whly3"]
 
 [resource]
 resource_local_to_scene = true
-script = ExtResource("1_m8itm")
+script = ExtResource("2_whly3")
 enabled = true
-filter_type = 0
-strength = 0.2
-num_layers = 5
-base_roughness = 1.0
-roughness = 1.8
-persistence = 0.5
-center = Vector3(0, 0, 0)
-min_value = 1.0
+noise_settings = ExtResource("1_ovy12")
 seed = 0
 frequency = 0.5001
 offset = Vector2i(0, 0)

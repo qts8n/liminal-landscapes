@@ -19,7 +19,8 @@ func set_shape(p_shape: Shape) -> void:
 	_noise_filters.clear()
 	_shape = p_shape
 	for noise in _shape.noise_layers:
-		_noise_filters.append(NoiseFilterFactory.create_noise_filter(noise))
+		if noise != null:
+			_noise_filters.append(NoiseFilterFactory.create_noise_filter(noise))
 	_num_layers = _noise_filters.size()
 	if _num_layers > 0:
 		_first_filter = _noise_filters[0]
@@ -32,7 +33,7 @@ func set_shape(p_shape: Shape) -> void:
 
 func calculate_point_on_planet(point_on_unit_sphere: Vector3) -> Vector3:
 	var point_on_shape = point_on_unit_sphere * _shape.radius
-	if _num_layers == 0:
+	if _num_layers == 0 or _first_filter == null:
 		return point_on_shape
 
 	var elevation = 0.
@@ -41,7 +42,7 @@ func calculate_point_on_planet(point_on_unit_sphere: Vector3) -> Vector3:
 		elevation = first_layer_elevation
 
 	for filter in _filter_slice:
-		if not filter.is_enabled():
+		if filter == null or not filter.is_enabled():
 			continue
 		var mask = 1.
 		if _shape.first_layer_mask:
