@@ -4,11 +4,11 @@ class_name ShapeGenerator
 
 var _shape: Shape
 
-var _noise_filters: Array[SimpleNoiseFilter] = []
+var _noise_filters: Array[NoiseFilter] = []
 
 var _num_layers: int = 0
-var _first_filter: SimpleNoiseFilter = null
-var _filter_slice: Array[SimpleNoiseFilter] = []
+var _first_filter: NoiseFilter = null
+var _filter_slice: Array[NoiseFilter] = []
 
 
 func _init(p_shape: Shape) -> void:
@@ -18,8 +18,8 @@ func _init(p_shape: Shape) -> void:
 func set_shape(p_shape: Shape) -> void:
 	_noise_filters.clear()
 	_shape = p_shape
-	for p_noise in _shape.noise_layers:
-		_noise_filters.append(SimpleNoiseFilter.new(p_noise))
+	for noise in _shape.noise_layers:
+		_noise_filters.append(NoiseFilterFactory.create_noise_filter(noise))
 	_num_layers = _noise_filters.size()
 	if _num_layers > 0:
 		_first_filter = _noise_filters[0]
