@@ -11,7 +11,7 @@ class_name UniformNoise
 
 @export_group("Noise Parameters")
 
-enum FilterType {SIMPLE, RIDGID}
+enum FilterType {SIMPLE, RIDGED}
 
 @export var filter_type: FilterType = FilterType.SIMPLE:
 	set(new_filter_type):

@@ -1,6 +1,6 @@
 extends NoiseFilter
 
-class_name RidgidNoiseFilter
+class_name RidgedNoiseFilter
 
 
 func evaluate(point: Vector3) -> float:
