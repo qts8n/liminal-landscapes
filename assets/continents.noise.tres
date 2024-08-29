@@ -1,19 +1,23 @@
-[gd_resource type="Resource" script_class="UniformNoise" load_steps=2 format=3 uid="uid://wwg2u6fl6gs6"]
+[gd_resource type="Resource" script_class="UniformNoise" load_steps=4 format=3 uid="uid://wwg2u6fl6gs6"]
 
+[ext_resource type="Script" path="res://addons/noise_terrain/resources/simple_noise_settings.gd" id="1_0yykw"]
 [ext_resource type="Script" path="res://addons/noise_terrain/resources/uniform_noise.gd" id="1_m8itm"]
+
+[sub_resource type="Resource" id="Resource_akfkg"]
+script = ExtResource("1_0yykw")
+strength = 1.0
+num_layers = 1
+base_roughness = 1.0
+roughness = 2.0
+persistence = 0.5
+center = Vector3(0, 0, 0)
+min_value = 0.0
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_m8itm")
 enabled = true
-filter_type = 0
-strength = 0.2
-num_layers = 5
-base_roughness = 1.0
-roughness = 1.8
-persistence = 0.5
-center = Vector3(0, 0, 0)
-min_value = 1.0
+noise_settings = SubResource("Resource_akfkg")
 seed = 0
 frequency = 0.5001
 offset = Vector2i(0, 0)
