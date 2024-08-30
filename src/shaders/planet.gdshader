@@ -1,17 +1,22 @@
 shader_type spatial;
 
-uniform vec3 color;
+uniform vec4 elevation_minmax;
+
+varying vec3 local_pos;
+
+
+float inverse_lerp(float from, float to, float value) {
+    return clamp((value - from) / (to - from), 0, 1);
+}
+
 
 void vertex() {
-	// Called for every vertex the material is visible on.
+	local_pos = VERTEX;
 }
+
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-	ALBEDO = color;
+	float elevation = length(local_pos.xyz);
+	
+	ALBEDO = vec3(inverse_lerp(elevation_minmax.x, elevation_minmax.y, elevation));
 }
-
-//void light() {
-	// Called for every pixel for every light affecting the material.
-	// Uncomment to replace the default light processing function with this one.
-//}

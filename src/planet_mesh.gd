@@ -24,12 +24,10 @@ const SECTOR_NORMALS = [
 			shape.changed.connect(_update_mesh)
 		_update_mesh()
 
-
 @export var planet_material: Material:
 	set(new_planet_material):
 		planet_material = new_planet_material
 		_update_mesh()
-
 
 var face_generator = FaceGenerator.new(shape)
 
@@ -73,6 +71,7 @@ func _process_mesh() -> void:
 		for surface_idx in range(mesh.get_surface_count()):
 			if mesh.surface_get_material(surface_idx) == null:
 				mesh.surface_set_material(surface_idx, planet_material)
+		planet_material.set_shader_parameter("elevation_minmax", face_generator.get_minmax())
 
 
 
