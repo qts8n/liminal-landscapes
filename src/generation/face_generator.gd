@@ -29,11 +29,16 @@ func set_shape(p_shape: Shape = null) -> void:
 
 
 func clear():
+	_shape_generator.clear()
 	_a_mesh.clear_surfaces()
 
 
 func get_mesh() -> ArrayMesh:
 	return _a_mesh
+
+
+func get_minmax() -> Vector4:
+	return _shape_generator.get_minmax()
 
 
 func add_face(normal: Vector3, resolution: int = 50) -> void:
