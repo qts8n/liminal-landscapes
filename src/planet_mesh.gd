@@ -27,7 +27,12 @@ const SECTOR_NORMALS = [
 @export var planet_material: Material:
 	set(new_planet_material):
 		planet_material = new_planet_material
-		_update_mesh()
+		_process_mesh()
+
+@export var apply_material: bool = true:
+	set(new_apply_material):
+		apply_material = new_apply_material
+		_process_mesh()
 
 var face_generator = FaceGenerator.new(shape)
 
@@ -67,10 +72,11 @@ func _update_mesh() -> void:
 func _process_mesh() -> void:
 	if mesh == null:
 		mesh = face_generator.get_mesh()
-	if planet_material != null:
-		for surface_idx in range(mesh.get_surface_count()):
-			if mesh.surface_get_material(surface_idx) == null:
-				mesh.surface_set_material(surface_idx, planet_material)
+	for surface_idx in range(mesh.get_surface_count()):
+		if apply_material:
+			mesh.surface_set_material(surface_idx, planet_material)
+		else:
+			mesh.surface_set_material(surface_idx, null)
 		planet_material.set_shader_parameter("elevation_minmax", face_generator.get_minmax())
 
 

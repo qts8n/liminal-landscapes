@@ -10,6 +10,6 @@ strength = 2.0
 num_layers = 5
 base_roughness = 2.0
 roughness = 4.0
-persistence = 0.5
+persistence = 0.535
 center = Vector3(0, 0, 0)
 min_value = 1.0

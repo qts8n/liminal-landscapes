@@ -37,8 +37,8 @@ class ElevationMinMax:
 	func get_max() -> float:
 		return _elevation_max
 
-	func get_minmax() -> Vector4:
-		return Vector4(_elevation_min, _elevation_max, 0., 0.)
+	func get_minmax() -> Vector2:
+		return Vector2(_elevation_min, _elevation_max)
 
 
 var _elevation_minmax = ElevationMinMax.new()
@@ -52,7 +52,7 @@ func clear():
 	_elevation_minmax.reset()
 
 
-func get_minmax() -> Vector4:
+func get_minmax() -> Vector2:
 	return _elevation_minmax.get_minmax()
 
 

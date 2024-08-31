@@ -11,7 +11,7 @@ func evaluate(point: Vector3) -> float:
 	for it in range(_noise.noise_settings.num_layers):
 		var v = 1. - absf(get_noise(point, frequency))
 		v *= v * weight
-		weight = v
+		weight = clampf(v * _noise.noise_settings.weight_scalar, 0, 1)
 
 		noise_value += v * amplitude
 		frequency *= _noise.noise_settings.roughness

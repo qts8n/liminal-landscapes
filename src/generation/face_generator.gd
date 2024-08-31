@@ -37,7 +37,7 @@ func get_mesh() -> ArrayMesh:
 	return _a_mesh
 
 
-func get_minmax() -> Vector4:
+func get_minmax() -> Vector2:
 	return _shape_generator.get_minmax()
 
 
