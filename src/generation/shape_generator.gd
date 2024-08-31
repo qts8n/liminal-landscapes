@@ -2,14 +2,6 @@ extends Node
 
 class_name ShapeGenerator
 
-var _shape: Shape
-
-var _noise_filters: Array[NoiseFilter] = []
-
-var _num_layers: int = 0
-var _first_filter: NoiseFilter = null
-var _filter_slice: Array[NoiseFilter] = []
-
 
 class ElevationMinMax:
 	const FLOAT32_MAX: float = 2. ** 126
@@ -41,6 +33,16 @@ class ElevationMinMax:
 		return Vector2(_elevation_min, _elevation_max)
 
 
+var _shape: Shape
+
+var _noise_filters: Array[NoiseFilter] = []
+
+var _num_layers: int = 0
+
+var _first_filter: NoiseFilter = null
+
+var _filter_slice: Array[NoiseFilter] = []
+
 var _elevation_minmax = ElevationMinMax.new()
 
 
@@ -60,8 +62,9 @@ func set_shape(p_shape: Shape) -> void:
 	_noise_filters.clear()
 	_shape = p_shape
 	for noise in _shape.noise_layers:
-		if noise != null:
-			_noise_filters.append(NoiseFilterFactory.create_noise_filter(noise))
+		if noise == null:
+			continue
+		_noise_filters.append(NoiseFilterFactory.create_noise_filter(noise))
 	_num_layers = _noise_filters.size()
 	if _num_layers > 0:
 		_first_filter = _noise_filters[0]
@@ -69,7 +72,6 @@ func set_shape(p_shape: Shape) -> void:
 	else:
 		_first_filter = null
 		_filter_slice = []
-
 
 
 func calculate_point_on_planet(point_on_unit_sphere: Vector3) -> Vector3:

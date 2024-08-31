@@ -51,17 +51,9 @@ func _wait_for_threads() -> void:
 		sector_thread.wait_to_finish()
 
 
-func clear() -> void:
-	face_generator.clear()
-
-
-func _update_settings() -> void:
-	face_generator.set_shape(shape)
-
-
 func _update_mesh() -> void:
-	clear()
-	_update_settings()
+	face_generator.clear()
+	face_generator.set_shape(shape)
 	for sector_it in range(SECTOR_NORMALS.size()):
 		var sector_normal = SECTOR_NORMALS[sector_it]
 		var sector_thread = _sector_threads[sector_it]
@@ -70,8 +62,7 @@ func _update_mesh() -> void:
 
 
 func _process_mesh() -> void:
-	if mesh == null:
-		mesh = face_generator.get_mesh()
+	mesh = face_generator.get_mesh()
 	for surface_idx in range(mesh.get_surface_count()):
 		if apply_material:
 			mesh.surface_set_material(surface_idx, planet_material)
@@ -83,9 +74,7 @@ func _process_mesh() -> void:
 
 func _enter_tree() -> void:
 	face_generator.changed.connect(_process_mesh)
-	_update_mesh()
 
 
 func _exit_tree() -> void:
 	face_generator.changed.disconnect(_process_mesh)
-	clear()
